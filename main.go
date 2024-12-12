@@ -16,12 +16,7 @@ const (
 	storagePath = "files_storage"
 	batchSize   = 100
 )
-// help - Что я могу сделать?  
-// .
 
-
-
-// 7657510414:AAFnS8a5UXpAT2WlONLe7HkIEOaCK5cfpo0
 func main() {
 	eventsProcessor := telegram.New(
 		tgClient.New(tgBotHost, mustToken()),
