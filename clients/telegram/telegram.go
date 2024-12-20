@@ -1,9 +1,10 @@
 package telegram
 
 import (
+	"kemov/LinkKeeperBot/lib/e"
+
 	"encoding/json"
 	"io"
-	"kemov/LinkKeeperBot/lib/e"
 	"net/http"
 	"net/url"
 	"path"
@@ -17,7 +18,7 @@ type Client struct {
 }
 
 const (
-	getUpdatesMethod = "getUpdates"
+	getUpdatesMethod  = "getUpdates"
 	sendMessageMethod = "sendMessage"
 )
 

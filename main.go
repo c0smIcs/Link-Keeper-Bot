@@ -1,26 +1,37 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"log"
 
 	"kemov/LinkKeeperBot/consumer/eventConsumer"
 	"kemov/LinkKeeperBot/events/telegram"
-	"kemov/LinkKeeperBot/storage/files"
+	"kemov/LinkKeeperBot/storage/sqlite"
 
 	tgClient "kemov/LinkKeeperBot/clients/telegram"
 )
 
 const (
-	tgBotHost   = "api.telegram.org"
-	storagePath = "files_storage"
-	batchSize   = 100
+	tgBotHost         = "api.telegram.org"
+	sqliteStoragePath = "data/sqlite/storage.db"
+	batchSize         = 100
 )
 
 func main() {
+	// s := files.New(storagePath)
+	s, err := sqlite.New(sqliteStoragePath)
+	if err != nil {
+		log.Fatal("Не удается подключиться к хранилищу: ", err)
+	}
+
+	if err := s.Init(context.TODO()); err != nil {
+		log.Fatal("Не удается инициализировать хранилище: ", err)
+	}
+
 	eventsProcessor := telegram.New(
 		tgClient.New(tgBotHost, mustToken()),
-		files.New(storagePath),
+		s,
 	)
 
 	log.Print("Сервис запущен")

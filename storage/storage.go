@@ -1,18 +1,20 @@
 package storage
 
 import (
+	"kemov/LinkKeeperBot/lib/e"
+	
 	"crypto/sha1"
+	"context"
 	"errors"
 	"fmt"
 	"io"
-	"kemov/LinkKeeperBot/lib/e"
 )
 
-type Storage interface{
-	Save(p *Page) error
-	PickRandom(userName string) (*Page, error)
-	Remove(p *Page) error
-	IsExists(p *Page) (bool, error)
+type Storage interface {
+	Save(ctx context.Context, p *Page) error
+	PickRandom(ctx context.Context, userName string) (*Page, error)
+	Remove(ctx context.Context, p *Page) error
+	IsExists(ctx context.Context, p *Page) (bool, error)
 }
 
 var ErrNoSavedPages = errors.New("Нет сохраненной страницы")

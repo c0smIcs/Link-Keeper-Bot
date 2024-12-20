@@ -1,15 +1,16 @@
 package files
 
 import (
-	"encoding/gob"
-	"errors"
-	"fmt"
 	"kemov/LinkKeeperBot/lib/e"
 	"kemov/LinkKeeperBot/storage"
-	"math/rand"
-	"os"
+	
 	"path/filepath"
+	"encoding/gob"
+	"math/rand"
+	"errors"
 	"time"
+	"fmt"
+	"os"
 )
 
 type Storage struct {
@@ -23,7 +24,7 @@ func New(basePath string) Storage {
 }
 
 func (s Storage) Save(page *storage.Page) (err error) {
-	defer func() {err = e.WrapIfErr("Не могу сохранить страницу", err) }()
+	defer func() { err = e.WrapIfErr("Не могу сохранить страницу", err) }()
 
 	fPath := filepath.Join(s.basePath, page.UserName)
 
@@ -53,10 +54,10 @@ func (s Storage) Save(page *storage.Page) (err error) {
 }
 
 func (s Storage) PickRandom(userName string) (page *storage.Page, err error) {
-	defer func() {err = e.WrapIfErr("Не могу выбрать случайную страницу", err) }()
+	defer func() { err = e.WrapIfErr("Не могу выбрать случайную страницу", err) }()
 
 	path := filepath.Join(s.basePath, userName)
-	
+
 	files, err := os.ReadDir(path)
 	if err != nil {
 		return nil, err
@@ -106,10 +107,10 @@ func (s Storage) IsExists(p *storage.Page) (bool, error) {
 		return false, nil
 	case err != nil:
 		msg := fmt.Sprintf("Не могу проверить, существует ли файл %s", path)
-		
+
 		return false, e.Wrap(msg, err)
 	}
-	
+
 	return true, nil
 }
 
@@ -118,7 +119,7 @@ func (s Storage) decodePage(filePath string) (*storage.Page, error) {
 	if err != nil {
 		return nil, e.Wrap("Не могу декодировать страницу", err)
 	}
-	defer func() {_ = f.Close()}()
+	defer func() { _ = f.Close() }()
 
 	var p storage.Page
 

@@ -2,6 +2,7 @@ package eventConsumer
 
 import (
 	"kemov/LinkKeeperBot/events"
+
 	"log"
 	"time"
 )

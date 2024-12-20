@@ -13,4 +13,3 @@ func WrapIfErr(msg string, err error) error {
 
 	return Wrap(msg, err)
 }
-
